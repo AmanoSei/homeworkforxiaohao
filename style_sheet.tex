@@ -1,0 +1,303 @@
+\usepackage{array,graphicx,hyperref,geometry,fancyhdr,
+setspace,xeCJK,fontspec,xunicode,amsmath,booktabs,diagbox,
+,syntonly,multicol,balance,tocloft,titletoc,chngcntr,ifthen,indentfirst}
+
+%使图片能按照章节自动编号，如图2.1，图2.2 ...
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+%\syntaxonly  %取消注释后只检查语法，不输出pdf文档
+
+%设置正文的英文字体族
+\setmainfont{Times New Roman} 
+\setsansfont{Consolas}
+\setmonofont{Courier New}
+
+%设置正文的中文字体族
+\setCJKmainfont{SimSun}
+\setCJKsansfont{KaiTi}
+\setCJKmonofont{Fangsong}
+
+%基础字体设置
+% \setCJKmainfont{SimSun}[AutoFakeBold={2.17},ItalicFont=KaiTi] %实现宋体加粗
+\setCJKfamilyfont{song}{SimSun}           %宋体 song
+\newcommand{\song}{\CJKfamily{song}}
+\setCJKfamilyfont{fs}{FangSong}           %仿宋2312 fs
+\newcommand{\fs}{\CJKfamily{fs}}
+\setCJKfamilyfont{yh}{Microsoft YaHei}    %微软雅黑 yh
+\newcommand{\yh}{\CJKfamily{yh}}
+\setCJKfamilyfont{hei}{SimHei}            %黑体  hei
+\newcommand{\hei}{\CJKfamily{hei}}
+\setCJKfamilyfont{kai}{KaiTi}             %黑体  hei
+\newcommand{\kai}{\CJKfamily{kai}}
+
+%基础字号设置
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{35pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{26.4pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{22pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+%这两行代码使得宋体能够正常地加粗
+\setCJKmainfont{SimSun}[AutoFakeBold={2},ItalicFont=KaiTi] %实现宋体加粗
+
+\setCJKfamilyfont{song}[AutoFakeBold = {2}]{SimSun}
+\renewcommand*{\song}{\CJKfamily{song}}
+
+
+\newcommand{\n}{\par}         %换行（缩进值固定）
+\newcommand{\kg}{\quad}       %空格     
+\newcommand{\konghang}{\qquad\par} %空行
+
+\geometry{a4paper,top=3.2cm,bottom=2.8cm,right=2.25cm,left=2.8cm}
+\ziju{0.000 1pt}
+
+
+\newcommand{\oddHeader}{}
+\newcommand{\evenHeader}{}
+
+\newcommand{\setOddPageHeader}[1]{\renewcommand{\oddHeader}{#1}}
+\newcommand{\setEvenPageHeader}[1]{\renewcommand{\evenHeader}{#1}}
+
+\lhead{} 
+\newcommand{\mkHeader}{\chead{\ifthenelse{\isodd{\thepage}}{\oddHeader}{\evenHeader}} }
+\rhead{}
+\lfoot{} 
+\cfoot{-\thepage-} 
+\rfoot{}
+\renewcommand\headrulewidth{0pt} %取消页眉横线
+
+%双线页眉                                              
+\makeatletter
+\def\headrule{{\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi%
+\hrule\@height0.5pt         %上页眉横线粗细设置
+\@width\headwidth\vskip1pt  %两条页眉横线之间的垂直间距
+\hrule\@height 0.5pt\@width\headwidth %下页眉横线粗细设置
+\vskip-2\headrulewidth\vskip12.5pt} %双线与下面正文之间的垂直间距1pt
+} 
+\makeatother
+\pagestyle{fancy}
+
+
+\newcommand{\artFormatSetup}{
+\xiaosi
+\setcounter{page}{1}   %页码编号从第一页开始
+\pagenumbering{arabic} %使用阿拉伯数字
+\pagestyle{fancy}
+%linespread 和 baselineskip相配合即可设置行距，当前为20磅行距
+\linespread{1.25}
+\setlength{\baselineskip}{20pt} 
+\setlength{\parindent}{2em}
+}
+
+
+%各级标题格式设置
+\usepackage[raggedright,compact]{titlesec}  %标题左对齐
+\titleformat{\section}{\sanhao\song\bfseries}{\thesection}{6pt}{}
+\titleformat{\subsection}{\sihao\song\bfseries}{\thesubsection}{6pt}{}
+\titleformat{\subsubsection}{\xiaosi\song\bfseries}{\thesubsubsection}{6pt}{}
+
+%设置各级标题的段前段后垂直距离
+\titlespacing*{\section}{0pt}{10pt}{17pt}
+\titlespacing*{\subsection}{0pt}{0pt}{8.2pt}
+\titlespacing*{\subsubsection}{0pt}{-5pt}{0pt}
+
+\newcommand{\yiji}[1]{\section{#1}}
+\newcommand{\erji}[1]{\subsection{#1}}
+\newcommand{\sanji}[1]{\subsubsection{#1}}
+
+
+%目录格式设置
+\renewcommand{\cftdotsep}{1} %缩小目录引导线的点距
+%使一级标题带目录引导线
+\renewcommand{\cftsecdotsep}{\cftdotsep}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}
+%各级标题字体设置
+\renewcommand{\cftsecfont}{\zihao{4}\songti}
+\renewcommand{\cftsubsecfont}{\zihao{4}\songti}
+\renewcommand{\cftsubsubsecfont}{\zihao{4}\songti}
+%各级标题对应的页码字体设置
+\renewcommand{\cftsecpagefont}{\xiaosi}
+\renewcommand{\cftsubsecpagefont}{\xiaosi}
+\renewcommand{\cftsubsubsecpagefont}{\xiaosi}
+%各级标题垂直间距
+\renewcommand{\cftbeforesecskip}{10pt}
+\renewcommand{\cftbeforesubsecskip}{10pt}
+\renewcommand{\cftbeforesubsubsecskip}{10pt}
+%连线和页码之间的间距
+\contentsmargin{5pt}
+\hypersetup{colorlinks=true,linkcolor=black} %去除目录标题的红框
+
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+columns=flexible, %优化非等宽字体显示效果
+numbers=left,     %行号左侧显示
+numberstyle= \rm, %行号字体设置
+basicstyle=\fontspec{Consolas},   %代码主字体设置（关键词，标识符等字体可另外设置）
+xleftmargin = 18pt, %行号与左侧页边距的距离
+frame = shadowbox,
+tabsize = 4
+} 
+
+\newcommand{\authorinfo}[2]{\centerline{\kai\sihao{$\bullet$ #1\quad $\bullet$ #2}}}
+\newcommand{\subtitle}[1]{\fs\sihao\raggedleft{ -----\,#1\hspace{2cm}\mbox{}}}
+\renewcommand{\title}[1]{\hei\erhao{#1}\par}
+\renewcommand{\contentsname}{\centerline{目 \quad 录}}
+
+%图片设置
+\usepackage[font=rm,labelsep=quad]{caption} 
+%插入图片宏，其中默认值0.5赋值给#1，若修改这个默认值：
+%\tupian[新的值]{arg2}{arg3}
+\newcommand{\img}[3][0.5]{
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width = #1\textwidth]{#2}
+\caption{#3}
+\end{center}
+\vspace{-0.5cm}
+\end{figure}
+}
+
+%设置位于图片下方的图题与上方图片和下方正文的间距
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{0pt}
+
+\newenvironment{biao}[2][1.5]
+{\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{#1} %设置表格中的行高，使文本与表格上横线有一定距离
+}
+{\end{tabular}
+ \end{table}}
+
+%三线表的上中下三条线样式控制
+\newcommand{\topline}{\toprule[1.75pt]}
+\newcommand{\midline}{\midrule[0.8pt]}
+\newcommand{\btmline}{\bottomrule[1.75pt]}
+
+\newcommand{\biaoge}[3][0.8]
+{
+\begin{table}[htbp]
+\centering
+%\arraystretch设置表格中的行高，使文本与表格上横线有一定距离
+\renewcommand{\arraystretch}{2} 
+%\resizebox设置表格(实际上是一个box)的宽度，！表示保持宽高比
+\caption{#2}
+\resizebox{#1\textwidth}{!}{\xiaosi#3} 
+\end{table}
+}
+
+
+\newcommand{\mkMuLu}{
+\tableofcontents
+\clearpage} %生成目录
+
+%生成指定列的表格
+\newcounter{cols}
+\newcommand{\mkTable}[4][c]{
+\setcounter{cols}{#3}
+\begin{table}[!ht]
+\caption{#2}\label{tab:parametervalues}
+\begin{tabular*}{\hsize}{@{}@{\extracolsep{\fill}}*\thecols{#1}@{}}
+#4
+\end{tabular*}
+\end{table}
+}
+
+
+\newcommand{\cnAbsTitle}[1]{
+\begin{center}
+\setlength{\baselineskip}{20pt}
+\xiaoer{\song{\textbf{#1}}}\\
+\sanhao{\song{\textbf{摘\ 要}}}
+\end{center}	
+\n
+\addcontentsline{toc}{section}{摘要}
+}
+
+
+\newcommand{\cnKeywords}[1]{
+\\\\\textbf{\song 关键词：}#1\clearpage
+}
+
+%创建英文摘要标题
+\newcommand{\enAbsTitle}[1]{
+\begin{center}
+\setlength{\baselineskip}{20pt}
+\xiaoer{\song{\textbf{#1}}}\\
+\setlength{\baselineskip}{31pt}
+\sanhao{\song{\textbf{ABSTRACT}}}
+\end{center}    
+\n
+\addcontentsline{toc}{section}{Abstract}
+}
+%创建英文摘要关键词
+\newcommand{\enKeywords}[1]{
+\\\\\textbf{\song KEY \, WORDS:\quad}#1\n
+}
+\newcommand{\Title}{文章标题}
+\newcommand{\Author}{许萌}
+\newcommand{\studentID}{1234567}
+\newcommand{\class}{计本1703}
+\newcommand{\major}{计算机科学与技术本科}
+\newcommand{\instructor}{许萌}
+
+\newcommand{\setTitle}[1]{\renewcommand{\Title}{#1}}
+\newcommand{\setAuthor}[1]{\renewcommand{\Author}{#1}}
+\newcommand{\setStudentID}[1]{\renewcommand{\studentID}{#1}}
+\newcommand{\setClass}[1]{\renewcommand{\class}{#1}}
+\newcommand{\setMajor}[1]{\renewcommand{\major}{#1}}
+\newcommand{\setInstructor}[1]{\renewcommand{\instructor}{#1}}
+
+
+
+\newcommand{\mkCover}{
+\begin{center}
+% \parbox{15.9cm}{论文分类号：2 \hfill 学校代码： 10708\kg \kg \n \hfill 学\phantom{占位}号： 1306020}
+\begin{figure}[!h]
+\raggedright
+\vspace{-10pt}
+\includegraphics[width=7.5cm]{__pic//logo.png}
+\end{figure}
+\n
+\centering
+\vspace{72pt}
+\textbf{\xiaochu{集\hspace{17pt}中\hspace{17pt}性\hspace{17pt}综\hspace{17pt}合\hspace{17pt}实\hspace{17pt}训\hspace{17pt}报\hspace{17pt}告}\n}
+\vspace{40pt}
+% \textbf{\yihao{Thesis\hspace{5pt}for\hspace{5pt}Bachelor's\hspace{5pt}Degree}\n \xiaochu{\phantom{占位}\n}}
+\vspace{16pt}
+\textbf{\setlength\parskip{7pt} \erhao{\Title}}
+\parbox{10cm}{
+\vspace{40pt}
+\song\sanhao
+\linespread{1.5}
+\setlength{\baselineskip}{31pt} 
+\centering
+\Author \n
+\vspace{70pt}
+\raggedright
+
+学\phantom{\,\,\,\,占\,\,\,\,位\,\,\,\,}号：\studentID \n
+班\phantom{\,\,\,\,占\,\,\,\,位\,\,\,\,}级：\class \n
+指\,\,\,\,导\,\,\,\,教\,\,\,\,师：\instructor \n
+专\,\,\,\,业\,\,\,\,名\,\,\,\,称：\major \n
+}
+\thispagestyle{empty}
+\clearpage
+\end{center}
+}
+
+
+% \bibliographystyle{plain}
+
